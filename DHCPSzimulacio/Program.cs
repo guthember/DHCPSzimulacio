@@ -83,6 +83,33 @@ namespace DHCPSzimulacio
              okt4.ToString();
     }
 
+    static void Feladat(string parancs)
+    {
+      /* parancs = "request;D19313570A82"
+       * először csak "request" paranccsal foglalkozunk
+       * 
+       * x Megnézzük, hogy "request"-e?
+       *   ki kell szedni a MAC címet a parancsból
+       */
+      if (parancs.Contains("request"))
+      {
+        
+      }
+      else
+      {
+        Console.WriteLine("Nem oké");
+      }
+    }
+
+    static void Feladatok()
+    {
+      foreach (var command in commands)
+      {
+        Feladat(command);
+      }
+    }
+
+
     static void Main(string[] args)
     {
       BeolvasList(excluded, "excluded.csv");
@@ -90,10 +117,11 @@ namespace DHCPSzimulacio
       BeolvasDictionary(dhcp, "dhcp.csv");
       BeolvasDictionary(reserved, "reserved.csv");
 
-      foreach (var e in commands)
-      {
-        Console.WriteLine(e);
-      }
+      //foreach (var e in commands)
+      //{
+      //  Console.WriteLine(e);
+      //}
+      
 
       Console.WriteLine("\nVége...");
       Console.ReadLine();
