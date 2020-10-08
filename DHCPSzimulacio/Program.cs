@@ -10,6 +10,10 @@ namespace DHCPSzimulacio
   class Program
   {
     static List<string> excluded = new List<string>();
+    static Dictionary<string, string> dhcp =
+      new Dictionary<string, string>();
+    static Dictionary<string, string> reserved =
+      new Dictionary<string, string>();
 
     static void BeolvasExclude()
     {
@@ -41,6 +45,27 @@ namespace DHCPSzimulacio
       }
     }
 
+    static void BeolvasDictionary(Dictionary<string, string> d,
+                                  string filenev)
+    {
+      try
+      {
+        StreamReader file = new StreamReader(filenev);
+
+        while (!file.EndOfStream)
+        {
+          string[] adatok = file.ReadLine().Split(';');
+          d.Add(adatok[0], adatok[1]);
+        }
+
+        file.Close();
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex.Message);
+      }
+    }
+
     static string CimEggyelNo(string cim)
     {
       string[] adatok = cim.Split('.');
@@ -59,11 +84,13 @@ namespace DHCPSzimulacio
     static void Main(string[] args)
     {
       BeolvasExclude();
+      BeolvasDictionary(dhcp, "dhcp.csv");
+      BeolvasDictionary(reserved, "reserved.csv");
 
-      //foreach (var e in excluded)
-      //{
-      //  Console.WriteLine(e);
-      //}
+      foreach (var e in reserved)
+      {
+        Console.WriteLine(e);
+      }
 
       Console.WriteLine("\nVége...");
       Console.ReadLine();
